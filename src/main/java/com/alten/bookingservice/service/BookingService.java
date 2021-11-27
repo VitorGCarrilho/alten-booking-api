@@ -1,6 +1,6 @@
 package com.alten.bookingservice.service;
 
-import com.alten.bookingservice.dto.BookingDTO;
+import com.alten.bookingservice.domain.Booking;
 import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
 import com.alten.bookingservice.producer.RequestedBookingEventProducer;
@@ -17,13 +17,11 @@ public class BookingService {
     @Autowired
     private RequestedBookingEventProducer requestedBookingEventProducer;
 
-    public CreateBookingResponseDTO createEventBooking(CreateBookingRequestDTO createBookingRequestDTO) {
-
-        var bookingDTO = new BookingDTO(createBookingRequestDTO);
-
-
-        requestedBookingEventProducer.produceEvent(bookingDTO, String.valueOf(bookingDTO.getRoomNumber()));
-
-        return new CreateBookingResponseDTO(bookingDTO);
+    public CreateBookingResponseDTO createBookingEvent(CreateBookingRequestDTO createBookingRequestDTO) {
+        logger.info("method=createBookingEvent");
+        var booking = new Booking(createBookingRequestDTO);
+        logger.info("method=createBookingEvent bookingId={}", booking.getId());
+        requestedBookingEventProducer.produceEvent(booking, String.valueOf(booking.getRoomNumber()));
+        return new CreateBookingResponseDTO(booking);
     }
 }

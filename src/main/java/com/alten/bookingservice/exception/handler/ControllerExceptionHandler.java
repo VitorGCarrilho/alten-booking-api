@@ -1,5 +1,7 @@
 package com.alten.bookingservice.exception.handler;
 
+import com.alten.bookingservice.exception.AdvanceReservationException;
+import com.alten.bookingservice.exception.OutOfRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +26,20 @@ public class ControllerExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.toList());
         return new ErrorBody(HttpStatus.BAD_REQUEST, messages);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OutOfRangeException.class)
+    public ErrorBody exceptionHandler(OutOfRangeException exception) {
+        return new ErrorBody(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AdvanceReservationException.class)
+    public ErrorBody exceptionHandler(AdvanceReservationException exception) {
+        return new ErrorBody(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
 }

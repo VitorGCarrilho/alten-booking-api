@@ -5,7 +5,6 @@ import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
 import com.alten.bookingservice.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +24,7 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<CreateBookingResponseDTO> createBooking(@Valid @RequestBody CreateBookingRequestDTO createBookingRequestDTO){
-        var response = bookingService.createEventBooking(createBookingRequestDTO);
+        var response = bookingService.createBookingEvent(createBookingRequestDTO);
         return ResponseEntity.accepted().body(response);
     }
 
