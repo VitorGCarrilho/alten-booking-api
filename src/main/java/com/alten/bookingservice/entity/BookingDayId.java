@@ -1,4 +1,4 @@
-package com.alten.bookingservice.model;
+package com.alten.bookingservice.entity;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;

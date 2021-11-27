@@ -1,6 +1,6 @@
-package com.alten.bookingservice.model;
+package com.alten.bookingservice.entity;
 
-import com.alten.bookingservice.model.enumeration.BookingStatus;
+import com.alten.bookingservice.entity.enumeration.BookingStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "booking")
-public class Booking {
+public class BookingEntity {
     @Id
     @Column(name = "id_booking")
     private String id;
@@ -20,9 +20,9 @@ public class Booking {
     private BookingStatus bookingStatus;
 
     @OneToMany(mappedBy = "booking")
-    private List<BookingDay> bookingDays;
+    private List<BookingDayEntity> bookingDays;
 
-    public Booking(String id, LocalDateTime bookingDate, int roomNumber, List<BookingDay> bookingDays) {
+    public BookingEntity(String id, LocalDateTime bookingDate, int roomNumber, List<BookingDayEntity> bookingDays) {
         this.id = id;
         this.bookingDate = bookingDate;
         this.bookingDays = bookingDays;
@@ -36,7 +36,7 @@ public class Booking {
         return bookingDate;
     }
 
-    public List<BookingDay> getBookingDays() {
+    public List<BookingDayEntity> getBookingDays() {
         return bookingDays;
     }
 }

@@ -1,19 +1,18 @@
-package com.alten.bookingservice.model;
+package com.alten.bookingservice.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "booking_day")
-public class BookingDay {
+public class BookingDayEntity {
     @EmbeddedId
     private BookingDayId bookId;
 
     @ManyToOne
     @JoinColumn(name="id_booking")
-    private Booking booking;
+    private BookingEntity booking;
 
-    public BookingDay(BookingDayId bookId) {
+    public BookingDayEntity(BookingDayId bookId) {
         this.bookId = bookId;
     }
 

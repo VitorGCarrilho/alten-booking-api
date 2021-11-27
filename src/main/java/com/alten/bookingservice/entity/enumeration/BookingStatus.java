@@ -1,4 +1,4 @@
-package com.alten.bookingservice.model.enumeration;
+package com.alten.bookingservice.entity.enumeration;
 
 public enum BookingStatus {
     BOOKING_REQUESTED,

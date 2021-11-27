@@ -3,6 +3,7 @@ package com.alten.bookingservice.domain;
 import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.exception.AdvanceReservationException;
 import com.alten.bookingservice.exception.OutOfRangeException;
+import com.alten.bookingservice.utils.SampleFactoryUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -42,11 +43,7 @@ class BookingTest {
     @Test
     public void shouldCreateDomainObject() {
         // GIVEN
-        CreateBookingRequestDTO createBookingRequestDTO = new CreateBookingRequestDTO();
-        createBookingRequestDTO.setFromDate(LocalDate.now().plusDays(15));
-        createBookingRequestDTO.setUntilDate(LocalDate.now().plusDays(18));
-        createBookingRequestDTO.setEmail("email@gmail.com");
-        createBookingRequestDTO.setRoomNumber(8);
+        CreateBookingRequestDTO createBookingRequestDTO = SampleFactoryUtils.validCreateBookingRequestDTO();
 
         // WHEN
         Booking booking = new Booking(createBookingRequestDTO);

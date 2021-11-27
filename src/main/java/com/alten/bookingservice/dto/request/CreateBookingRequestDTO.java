@@ -5,9 +5,11 @@ import java.time.LocalDate;
 
 public class CreateBookingRequestDTO {
 
+    @NotNull(message = "from date should not be null")
     @Future(message = "from date should be in future")
     private LocalDate fromDate;
 
+    @NotNull(message = "until date should not be null")
     @Future(message = "from date should be in future")
     private LocalDate untilDate;
 
