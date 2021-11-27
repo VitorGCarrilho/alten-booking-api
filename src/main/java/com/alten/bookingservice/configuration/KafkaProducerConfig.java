@@ -1,6 +1,6 @@
 package com.alten.bookingservice.configuration;
 
-import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
+import com.alten.bookingservice.dto.BookingDTO;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -22,7 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, CreateBookingRequestDTO> producerFactory() {
+    public ProducerFactory<String, BookingDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -31,7 +31,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, CreateBookingRequestDTO> kafkaTemplate() {
+    public KafkaTemplate<String, BookingDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

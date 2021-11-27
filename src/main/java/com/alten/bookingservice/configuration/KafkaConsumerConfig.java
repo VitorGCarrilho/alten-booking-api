@@ -1,6 +1,6 @@
 package com.alten.bookingservice.configuration;
 
-import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
+import com.alten.bookingservice.dto.BookingDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,18 +26,18 @@ public class KafkaConsumerConfig {
     private String consumerGroupId;
 
     @Bean
-    public ConsumerFactory<String, CreateBookingRequestDTO> consumerFactory() {
+    public ConsumerFactory<String, BookingDTO> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG,  consumerGroupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return new DefaultKafkaConsumerFactory(props, new StringDeserializer(), new JsonDeserializer<>(CreateBookingRequestDTO.class));
+        return new DefaultKafkaConsumerFactory(props, new StringDeserializer(), new JsonDeserializer<>(BookingDTO.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, CreateBookingRequestDTO> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, CreateBookingRequestDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, BookingDTO> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, BookingDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

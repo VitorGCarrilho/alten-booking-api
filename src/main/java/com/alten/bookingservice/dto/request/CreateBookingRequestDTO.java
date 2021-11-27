@@ -1,12 +1,22 @@
 package com.alten.bookingservice.dto.request;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class CreateBookingRequestDTO {
 
     private LocalDate fromDate;
     private LocalDate untilDate;
+
+    @Min(1)
     private int roomNumber;
+
+    @NotNull(message = "email may not be null")
+    @NotBlank(message = "email may not be blank")
+    @Size(max=50)
     private String email;
 
     public LocalDate getFromDate() {

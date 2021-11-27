@@ -1,5 +1,6 @@
 package com.alten.bookingservice.consumer;
 
+import com.alten.bookingservice.dto.BookingDTO;
 import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.producer.RequestedBookingEventProducer;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public class RequestedBookingEventListener {
     private static final Logger logger = LoggerFactory.getLogger(RequestedBookingEventListener.class);
 
     @KafkaListener(topics = "${topic.booking.request}", groupId = "${consumer.booking.service.group-id}")
-    public void listen(CreateBookingRequestDTO createBookingRequestDTO) {
-        logger.info("method=listen message={}", createBookingRequestDTO);
+    public void listen(BookingDTO bookingDTO) {
+        logger.info("method=listen message={}", bookingDTO);
     }
 }

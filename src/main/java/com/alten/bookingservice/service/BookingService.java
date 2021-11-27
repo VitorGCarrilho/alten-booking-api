@@ -1,21 +1,29 @@
 package com.alten.bookingservice.service;
 
+import com.alten.bookingservice.dto.BookingDTO;
 import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
 import com.alten.bookingservice.producer.RequestedBookingEventProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookingService {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
+
     @Autowired
     private RequestedBookingEventProducer requestedBookingEventProducer;
 
-    public CreateBookingResponseDTO createBooking(CreateBookingRequestDTO createBookingRequestDTO) {
+    public CreateBookingResponseDTO createEventBooking(CreateBookingRequestDTO createBookingRequestDTO) {
 
-        requestedBookingEventProducer.produceEvent(createBookingRequestDTO, String.valueOf(createBookingRequestDTO.getRoomNumber()));
+        var bookingDTO = new BookingDTO(createBookingRequestDTO);
 
-        return null;
+
+        requestedBookingEventProducer.produceEvent(bookingDTO, String.valueOf(bookingDTO.getRoomNumber()));
+
+        return new CreateBookingResponseDTO(bookingDTO);
     }
 }
