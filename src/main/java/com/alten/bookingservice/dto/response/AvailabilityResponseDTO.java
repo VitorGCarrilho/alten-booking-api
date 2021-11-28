@@ -1,8 +1,9 @@
 package com.alten.bookingservice.dto.response;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class AvailabilityResponseDTO {
+public class AvailabilityResponseDTO implements Serializable {
 
     private LocalDate localDate;
     private boolean available;
