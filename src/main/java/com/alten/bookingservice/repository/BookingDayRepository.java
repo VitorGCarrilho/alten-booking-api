@@ -1,21 +1,17 @@
 package com.alten.bookingservice.repository;
 
 import com.alten.bookingservice.entity.BookingDayEntity;
-import com.alten.bookingservice.entity.BookingDayEntityId;
 import com.alten.bookingservice.exception.AlreadyBookedException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -25,6 +21,9 @@ public class BookingDayRepository {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private BookingDayJpaRepository bookingDayJpaRepository;
 
     @Transactional
     public void saveAll(List<BookingDayEntity> bookingDays) {
@@ -46,6 +45,10 @@ public class BookingDayRepository {
             }
             throw e;
         }
+    }
+
+    public List<BookingDayEntity> findByRoomNumberAndBookingDateBetween(int roomNumber, LocalDate from, LocalDate until) {
+        return this.bookingDayJpaRepository.findByBookId_RoomNumberAndBookId_BookingDateBetween(roomNumber, from, until);
     }
 
     private boolean isNew(BookingDayEntity bookingDay) {

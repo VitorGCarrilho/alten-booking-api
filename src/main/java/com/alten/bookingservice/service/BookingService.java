@@ -3,8 +3,6 @@ package com.alten.bookingservice.service;
 import com.alten.bookingservice.domain.Booking;
 import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
-import com.alten.bookingservice.entity.BookingDayEntity;
-import com.alten.bookingservice.entity.BookingDayEntityId;
 import com.alten.bookingservice.entity.BookingEntity;
 import com.alten.bookingservice.entity.factory.BookingDayEntityFactory;
 import com.alten.bookingservice.exception.AlreadyBookedException;
@@ -15,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class BookingService {

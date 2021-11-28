@@ -19,7 +19,7 @@ public class BookingDayEntity implements Serializable {
     }
 
     public BookingDayEntity(BookingEntity booking, LocalDate bookedDate) {
-        this.bookId = new BookingDayEntityId(bookedDate, booking.getRoomNumber(), booking.getId());
+        this.bookId = new BookingDayEntityId(bookedDate, booking.getRoomNumber());
         this.booking = booking;
     }
 
