@@ -20,7 +20,7 @@ class BookingTest {
         // GIVEN
         CreateBookingRequestDTO createBookingRequestDTO = new CreateBookingRequestDTO();
         createBookingRequestDTO.setFromDate(LocalDate.of(2021, 01, 01));
-        createBookingRequestDTO.setUntilDate(LocalDate.of(2021, 01, 05));
+        createBookingRequestDTO.setUntilDate(LocalDate.of(2021, 01, 04));
 
         // WHEN
         assertThrows(OutOfRangeException.class, () -> {

@@ -15,8 +15,14 @@ public class KafkaTopicConfig {
     @Value(value = "${bootstrap.servers}")
     private String bootstrapAddress;
 
-    @Value(value = "${topic.booking.request}")
+    @Value(value = "${topic.booking.request.name}")
     private String bookingRequestTopicName;
+
+    @Value(value = "${topic.booking.request.partitions}")
+    private int bookingRequestTopicPartitions;
+
+    @Value(value = "${topic.booking.request.replication}")
+    private int bookingRequestTopicReplication;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -27,6 +33,6 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic bookingRequestTopic() {
-        return new NewTopic(bookingRequestTopicName, 10, (short) 2);
+        return new NewTopic(bookingRequestTopicName, bookingRequestTopicPartitions, (short) bookingRequestTopicReplication);
     }
 }

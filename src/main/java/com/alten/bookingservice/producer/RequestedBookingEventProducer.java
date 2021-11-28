@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class RequestedBookingEventProducer extends AbstractProducer<Booking>{
 
     @Autowired
-    public RequestedBookingEventProducer(@Value("${topic.booking.request}") String topicName, KafkaTemplate<String, Booking> kafkaTemplate) {
+    public RequestedBookingEventProducer(@Value("${topic.booking.request.name}") String topicName, KafkaTemplate<String, Booking> kafkaTemplate) {
         super(topicName, kafkaTemplate);
     }
 }

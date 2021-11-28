@@ -18,7 +18,7 @@ public class Booking implements Serializable {
 
     public Booking(CreateBookingRequestDTO createBookingRequestDTO) {
 
-        if (ChronoUnit.DAYS.between(createBookingRequestDTO.getFromDate(), createBookingRequestDTO.getUntilDate())>3) {
+        if ((ChronoUnit.DAYS.between(createBookingRequestDTO.getFromDate(), createBookingRequestDTO.getUntilDate())+ 1) >3) {
             throw new OutOfRangeException("the stay can not be longer than 3 days");
         }
 
