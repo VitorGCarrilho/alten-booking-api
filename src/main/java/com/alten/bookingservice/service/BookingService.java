@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 
 @Service
 public class BookingService {
@@ -41,7 +40,6 @@ public class BookingService {
         return new CreateBookingResponseDTO(booking);
     }
 
-    @Transactional
     public void bookStay(Booking booking) {
         logger.info("method=bookStay id={}", booking.getId());
         var bookingEntity = new BookingEntity(booking);

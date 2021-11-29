@@ -16,7 +16,7 @@ services:
       - '3306'
       # Where our data will be persisted
     volumes:
-      - my-database:/var/lib/mysql
+      - my-db:/var/lib/mysql
   # Names our volume
   zookeeper-1:
     image: confluentinc/cp-zookeeper:latest
@@ -69,4 +69,4 @@ services:
     ports:
       - "6379:6379"
 volumes:
-  my-database: {}
+  my-db: {}
