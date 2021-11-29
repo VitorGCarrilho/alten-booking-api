@@ -40,7 +40,7 @@ public class BookingService {
     }
 
     public void bookStay(Booking booking) {
-        logger.info("method=bookStay");
+        logger.info("method=bookStay id={}", booking.getId());
         var bookingEntity = new BookingEntity(booking);
         bookingRepository.save(bookingEntity);
 
@@ -50,12 +50,14 @@ public class BookingService {
             bookingEntity.accept();
             bookingRepository.save(bookingEntity);
 
+            logger.info("method=bookStay id={} status=booked", booking.getId());
             // TODO NOTIFY SUCCESS
         } catch (AlreadyBookedException e) {
             logger.info("method=bookStay status=AlreadyBookedException");
             bookingEntity.deny();
             bookingRepository.save(bookingEntity);
 
+            logger.info("method=bookStay id={} status=denied", booking.getId());
             // TODO NOTIFY FAIL
         }
 
