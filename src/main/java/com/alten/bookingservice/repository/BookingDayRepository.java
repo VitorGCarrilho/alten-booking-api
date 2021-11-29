@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@Transactional
 public class BookingDayRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(BookingDayRepository.class);
