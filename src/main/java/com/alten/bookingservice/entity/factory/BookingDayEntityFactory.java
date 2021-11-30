@@ -4,6 +4,7 @@ import com.alten.bookingservice.entity.BookingDayEntity;
 import com.alten.bookingservice.entity.BookingEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,10 @@ public class BookingDayEntityFactory {
 
     public List<BookingDayEntity> getBookingDays(BookingEntity bookingEntity) {
         var bookingDays = new ArrayList<BookingDayEntity>();
-        var current = bookingEntity.getFromDate();
-        while (!current.isAfter(bookingEntity.getUntilDate())) {
+
+        for (LocalDate current = bookingEntity.getFromDate(); !current.isAfter(bookingEntity.getUntilDate()); current = current.plusDays(1)) {
             var bookingDay = new BookingDayEntity(bookingEntity, current);
             bookingDays.add(bookingDay);
-            current = current.plusDays(1);
         }
         return bookingDays;
     }

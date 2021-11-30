@@ -1,7 +1,6 @@
 package com.alten.bookingservice.producer;
 
 import com.alten.bookingservice.domain.Booking;
-import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
 import com.alten.bookingservice.utils.SampleFactoryUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class RequestedBookingEventProducerTest {

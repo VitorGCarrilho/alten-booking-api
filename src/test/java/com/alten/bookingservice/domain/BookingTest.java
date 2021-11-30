@@ -1,6 +1,6 @@
 package com.alten.bookingservice.domain;
 
-import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
+import com.alten.bookingservice.dto.request.BookingRequestDTO;
 import com.alten.bookingservice.exception.AdvanceReservationException;
 import com.alten.bookingservice.exception.OutOfRangeException;
 import com.alten.bookingservice.utils.SampleFactoryUtils;
@@ -18,41 +18,41 @@ class BookingTest {
     @Test
     public void theStayCanNotBeLongerThan3DaysTest() {
         // GIVEN
-        CreateBookingRequestDTO createBookingRequestDTO = new CreateBookingRequestDTO();
-        createBookingRequestDTO.setFromDate(LocalDate.of(2021, 01, 01));
-        createBookingRequestDTO.setUntilDate(LocalDate.of(2021, 01, 04));
+        BookingRequestDTO bookingRequestDTO = new BookingRequestDTO();
+        bookingRequestDTO.setFromDate(LocalDate.of(2021, 01, 01));
+        bookingRequestDTO.setUntilDate(LocalDate.of(2021, 01, 04));
 
         // WHEN
         assertThrows(OutOfRangeException.class, () -> {
-            Booking booking = new Booking(createBookingRequestDTO);
+            Booking booking = new Booking(bookingRequestDTO);
         });
     }
 
     @Test
     public void canNotBeReservedMoreThan30DaysInAdvanceTest() {
         // GIVEN
-        CreateBookingRequestDTO createBookingRequestDTO = new CreateBookingRequestDTO();
-        createBookingRequestDTO.setFromDate(LocalDate.now().plusDays(31));
-        createBookingRequestDTO.setUntilDate(LocalDate.now().plusDays(32));
+        BookingRequestDTO bookingRequestDTO = new BookingRequestDTO();
+        bookingRequestDTO.setFromDate(LocalDate.now().plusDays(31));
+        bookingRequestDTO.setUntilDate(LocalDate.now().plusDays(32));
         // WHEN
         assertThrows(AdvanceReservationException.class, () -> {
-            Booking booking = new Booking(createBookingRequestDTO);
+            Booking booking = new Booking(bookingRequestDTO);
         });
     }
 
     @Test
     public void shouldCreateDomainObject() {
         // GIVEN
-        CreateBookingRequestDTO createBookingRequestDTO = SampleFactoryUtils.validCreateBookingRequestDTO();
+        BookingRequestDTO bookingRequestDTO = SampleFactoryUtils.validCreateBookingRequestDTO();
 
         // WHEN
-        Booking booking = new Booking(createBookingRequestDTO);
+        Booking booking = new Booking(bookingRequestDTO);
 
         // THEN
-        assertEquals(createBookingRequestDTO.getFromDate(), booking.getFromDate());
-        assertEquals(createBookingRequestDTO.getUntilDate(), booking.getUntilDate());
-        assertEquals(createBookingRequestDTO.getEmail(), booking.getEmail());
-        assertEquals(createBookingRequestDTO.getRoomNumber(), booking.getRoomNumber());
+        assertEquals(bookingRequestDTO.getFromDate(), booking.getFromDate());
+        assertEquals(bookingRequestDTO.getUntilDate(), booking.getUntilDate());
+        assertEquals(bookingRequestDTO.getEmail(), booking.getEmail());
+        assertEquals(bookingRequestDTO.getRoomNumber(), booking.getRoomNumber());
         assertNotNull(booking.getId());
     }
 }

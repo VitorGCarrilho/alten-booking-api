@@ -56,4 +56,14 @@ public class BookingDayRepository {
         return booking == null;
     }
 
+    @Transactional
+    public void updateBooking(String id, List<BookingDayEntity> bookingDays) {
+        bookingDayJpaRepository.deleteByBooking_id(id);
+        this.saveAll(bookingDays);
+    }
+
+    @Transactional
+    public void removeBooking(String id) {
+        bookingDayJpaRepository.deleteByBooking_id(id);
+    }
 }

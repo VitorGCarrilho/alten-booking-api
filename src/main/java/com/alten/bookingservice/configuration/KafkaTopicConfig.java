@@ -24,6 +24,24 @@ public class KafkaTopicConfig {
     @Value(value = "${topic.booking.request.replication}")
     private int bookingRequestTopicReplication;
 
+    @Value(value = "${topic.booking.cancel.name}")
+    private String cancelRequestTopicName;
+
+    @Value(value = "${topic.booking.cancel.partitions}")
+    private int cancelRequestTopicPartitions;
+
+    @Value(value = "${topic.booking.cancel.replication}")
+    private int cancelRequestTopicReplication;
+
+    @Value(value = "${topic.booking.update.name}")
+    private String updateRequestTopicName;
+
+    @Value(value = "${topic.booking.update.partitions}")
+    private int updateRequestTopicPartitions;
+
+    @Value(value = "${topic.booking.update.replication}")
+    private int updateRequestTopicReplication;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -34,5 +52,15 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic bookingRequestTopic() {
         return new NewTopic(bookingRequestTopicName, bookingRequestTopicPartitions, (short) bookingRequestTopicReplication);
+    }
+
+    @Bean
+    public NewTopic cancelBookingRequestTopic() {
+        return new NewTopic(cancelRequestTopicName, cancelRequestTopicPartitions, (short) cancelRequestTopicReplication);
+    }
+
+    @Bean
+    public NewTopic updateBookingRequestTopic() {
+        return new NewTopic(updateRequestTopicName, updateRequestTopicPartitions, (short) updateRequestTopicReplication);
     }
 }

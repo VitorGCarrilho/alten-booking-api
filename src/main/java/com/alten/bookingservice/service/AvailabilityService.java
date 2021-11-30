@@ -32,6 +32,8 @@ public class AvailabilityService {
             commandKey = "getAvailabilityFromDB",
             fallbackMethod = "findCachedAvailability")
     public List<AvailabilityResponseDTO> getAvailability(int roomNumber, LocalDate from, LocalDate until) {
+        logger.info("method=getAvailability roomNumber={} fromDate={} untilDate={}", roomNumber, from, until);
+
         var availabilityList = new ArrayList<AvailabilityResponseDTO>();
         var bookings = bookingDayRepository
                 .findByRoomNumberAndBookingDateBetween(roomNumber, from, until)
@@ -39,12 +41,11 @@ public class AvailabilityService {
                 .map(BookingDayEntity::getBookId)
                 .collect(Collectors.toList());
 
-        var current = from;
-        while (!current.isAfter(until)) {
+        for (LocalDate current = from; !current.isAfter(until); current = current.plusDays(1)) {
             var booked = bookings.contains(new BookingDayEntityId(current, roomNumber));
             availabilityList.add(new AvailabilityResponseDTO(current, booked));
-            current = current.plusDays(1);
         }
+
         bookingDayCacheRepository.saveAvailability(roomNumber, from, until, availabilityList);
 
         return availabilityList;

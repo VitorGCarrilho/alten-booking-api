@@ -1,9 +1,8 @@
 package com.alten.bookingservice.entity.factory;
 
 import com.alten.bookingservice.domain.Booking;
-import com.alten.bookingservice.dto.request.CreateBookingRequestDTO;
+import com.alten.bookingservice.dto.request.BookingRequestDTO;
 import com.alten.bookingservice.entity.BookingEntity;
-import com.alten.bookingservice.utils.SampleFactoryUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,10 +22,10 @@ class BookingDayEntityFactoryTest {
     void getBookingDays() {
 
         // GIVEN
-        CreateBookingRequestDTO createBookingRequestDTO = new CreateBookingRequestDTO();
-        createBookingRequestDTO.setFromDate(LocalDate.now().plusDays(15));
-        createBookingRequestDTO.setUntilDate(LocalDate.now().plusDays(17));
-        BookingEntity booking = new BookingEntity(new Booking(createBookingRequestDTO));
+        BookingRequestDTO bookingRequestDTO = new BookingRequestDTO();
+        bookingRequestDTO.setFromDate(LocalDate.now().plusDays(15));
+        bookingRequestDTO.setUntilDate(LocalDate.now().plusDays(17));
+        BookingEntity booking = new BookingEntity(new Booking(bookingRequestDTO));
 
         // WHEN
         var bookingDayEntities = bookingDayEntityFactory.getBookingDays(booking);

@@ -50,6 +50,14 @@ public class BookingEntity {
         bookingStatus = BookingStatus.DENIED;
     }
 
+    public void denyUpdate() {
+        bookingStatus = BookingStatus.UPDATE_DENIED;
+    }
+
+    public void cancel() {
+        bookingStatus = BookingStatus.CANCELLED;
+    }
+
     public BookingEntity() {}
 
     public String getId() {
@@ -109,5 +117,10 @@ public class BookingEntity {
                 ", roomNumber=" + roomNumber +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public void updated() {
+        updatedAt = LocalDateTime.now();
+        bookingStatus = BookingStatus.BOOKED;
     }
 }

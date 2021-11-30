@@ -3,7 +3,7 @@ package com.alten.bookingservice.dto.request;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-public class CreateBookingRequestDTO {
+public class BookingRequestDTO {
 
     @NotNull(message = "from date should not be null")
     @Future(message = "from date should be in future")
