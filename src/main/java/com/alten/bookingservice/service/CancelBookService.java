@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 public class CancelBookService {
 
@@ -31,7 +29,6 @@ public class CancelBookService {
         cancelBookingEventProducer.produceEvent(bookingToCancel, id);
     }
 
-    @Transactional
     public void cancelBook(Booking booking) {
         logger.info("method=cancelBook id={}", booking.getId());
         var optBooking = bookingRepository.findById(booking.getId());
