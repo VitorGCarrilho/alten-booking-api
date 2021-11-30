@@ -1,6 +1,7 @@
 package com.alten.bookingservice.domain;
 
 import com.alten.bookingservice.dto.request.BookingRequestDTO;
+import com.alten.bookingservice.entity.BookingEntity;
 import com.alten.bookingservice.exception.AdvanceReservationException;
 import com.alten.bookingservice.exception.OutOfRangeException;
 
@@ -46,6 +47,14 @@ public class Booking implements Serializable {
     public Booking(String id, BookingRequestDTO bookingRequestDTO) {
         this(bookingRequestDTO);
         this.id = id;
+    }
+
+    public Booking(String id, BookingEntity booking) {
+        this.id = id;
+        this.fromDate = booking.getFromDate();
+        this.untilDate = booking.getUntilDate();
+        this.roomNumber = booking.getRoomNumber();
+        this.email = booking.getEmail();
     }
 
     public String getId() {

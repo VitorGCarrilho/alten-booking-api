@@ -42,6 +42,15 @@ public class KafkaTopicConfig {
     @Value(value = "${topic.booking.update.replication}")
     private int updateRequestTopicReplication;
 
+    @Value(value = "${topic.booking.notification.name}")
+    private String notificationTopicName;
+
+    @Value(value = "${topic.booking.notification.partitions}")
+    private int notificationTopicPartitions;
+
+    @Value(value = "${topic.booking.notification.replication}")
+    private int notificationTopicReplication;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -62,5 +71,10 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic updateBookingRequestTopic() {
         return new NewTopic(updateRequestTopicName, updateRequestTopicPartitions, (short) updateRequestTopicReplication);
+    }
+
+    @Bean
+    public NewTopic notificationRequestTopic() {
+        return new NewTopic(notificationTopicName, notificationTopicPartitions, (short) notificationTopicReplication);
     }
 }

@@ -1,11 +1,13 @@
 package com.alten.bookingservice.service;
 
 import com.alten.bookingservice.domain.Booking;
+import com.alten.bookingservice.domain.Notification;
 import com.alten.bookingservice.dto.request.BookingRequestDTO;
 import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
 import com.alten.bookingservice.entity.BookingEntity;
 import com.alten.bookingservice.entity.factory.BookingDayEntityFactory;
 import com.alten.bookingservice.exception.AlreadyBookedException;
+import com.alten.bookingservice.producer.NotificationEventProducer;
 import com.alten.bookingservice.producer.RequestedBookingEventProducer;
 import com.alten.bookingservice.repository.BookingDayRepository;
 import com.alten.bookingservice.repository.BookingRepository;
@@ -32,6 +34,9 @@ public class BookingService {
     @Autowired
     private RequestedBookingEventProducer requestedBookingEventProducer;
 
+    @Autowired
+    private NotificationEventProducer notificationEventProducer;
+
     public CreateBookingResponseDTO createBookingEvent(BookingRequestDTO bookingRequestDTO) {
         logger.info("method=createBookingEvent");
         var booking = new Booking(bookingRequestDTO);
@@ -52,14 +57,17 @@ public class BookingService {
             bookingRepository.save(bookingEntity);
 
             logger.info("method=bookStay id={} status=booked", booking.getId());
-            // TODO NOTIFY SUCCESS
+            var notification = new Notification(booking, Notification.NotificationType.BOOKED);
+            notificationEventProducer.produceEvent(notification, String.valueOf( booking.getRoomNumber()));
+
         } catch (AlreadyBookedException e) {
             logger.info("method=bookStay status=AlreadyBookedException");
             bookingEntity.deny();
             bookingRepository.save(bookingEntity);
 
             logger.info("method=bookStay id={} status=denied", booking.getId());
-            // TODO NOTIFY FAIL
+            var notification = new Notification(booking, Notification.NotificationType.ROOM_ALREADY_BOOKED);
+            notificationEventProducer.produceEvent(notification, String.valueOf( booking.getRoomNumber()));
         }
 
     }
