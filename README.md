@@ -149,3 +149,8 @@ the minimum test coverage.
 As described before, we need to give a feedback to the user after our end user. Here is some example of the feedback:
 
 ![Alt text](readme-resources/email-example.PNG?raw=true "Title")
+
+
+## CI pipline
+
+[![Java CI with Maven](https://github.com/VitorGCarrilho/alten-booking-service/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/VitorGCarrilho/alten-booking-service/actions/workflows/maven.yml)
