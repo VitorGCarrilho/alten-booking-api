@@ -1,6 +1,7 @@
 package com.alten.bookingservice.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Notification implements Serializable {
     private Booking booking;
@@ -51,5 +52,18 @@ public class Notification implements Serializable {
         public String getSubject() {
             return subject;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notification that = (Notification) o;
+        return Objects.equals(booking, that.booking) && notificationType == that.notificationType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(booking, notificationType);
     }
 }

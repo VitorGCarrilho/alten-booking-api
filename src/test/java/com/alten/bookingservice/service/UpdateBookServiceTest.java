@@ -5,27 +5,28 @@ import com.alten.bookingservice.domain.Notification;
 import com.alten.bookingservice.entity.BookingEntity;
 import com.alten.bookingservice.entity.factory.BookingDayEntityFactory;
 import com.alten.bookingservice.producer.NotificationEventProducer;
-import com.alten.bookingservice.producer.RequestedBookingEventProducer;
+import com.alten.bookingservice.producer.UpdateBookingEventProducer;
 import com.alten.bookingservice.repository.BookingDayRepository;
 import com.alten.bookingservice.repository.BookingRepository;
 import com.alten.bookingservice.utils.SampleFactoryUtils;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
-class BookingServiceTest {
+class UpdateBookServiceTest {
+
+    @Mock
+    private UpdateBookingEventProducer updateBookingEventProducer;
 
     @Mock
     private BookingRepository bookingRepository;
@@ -34,44 +35,42 @@ class BookingServiceTest {
     private BookingDayRepository bookingDayRepository;
 
     @Mock
-    private RequestedBookingEventProducer requestedBookingEventProducer;
-
-    @Mock
     private BookingDayEntityFactory bookingDayEntityFactory;
 
     @Mock
     private NotificationEventProducer notificationEventProducer;
 
     @InjectMocks
-    private BookingService bookingService;
+    private UpdateBookService updateBookService;
 
     @Test
-    void createBookingEvent() {
-        // GIVEN
+    public void shouldCreateUpdateEvent() {
+        var id = "123";
         var bookingRequest = SampleFactoryUtils.validCreateBookingRequestDTO();
 
-        // WHEN
-        var response  = bookingService.createBookingEvent(bookingRequest);
+        updateBookService.updateBookEvent(id, bookingRequest);
 
-        // THEN
-        assertNotNull(response.getId());
-        Mockito.verify(requestedBookingEventProducer).produceEvent(any(), anyString());
+        Mockito.verify(updateBookingEventProducer).produceEvent(new Booking(id, bookingRequest)
+                , String.valueOf(bookingRequest.getRoomNumber()));
     }
 
     @Test
-    void bookStay() {
-        // GIVEN
+    public void shouldUpdate() {
         var booking = SampleFactoryUtils.booking();
         var bookingEntity = new BookingEntity(booking);
         var bookingDays = Arrays.asList(SampleFactoryUtils.bookingDayEntity());
+        bookingEntity.updated();
 
-        Mockito.when(bookingDayEntityFactory.getBookingDays(bookingEntity)).thenReturn(bookingDays);
+        Mockito.when(bookingDayEntityFactory.getBookingDays(any())).thenReturn(bookingDays);
 
-        // WHEN
-        bookingService.bookStay(booking);
+        Mockito.when(bookingRepository.findById(booking.getId())).thenReturn(Optional.of(bookingEntity));
 
-        // THEN
-        Mockito.verify(bookingRepository, Mockito.times(2)).save(any());
-        Mockito.verify(bookingDayRepository).saveAll(bookingDays);
+        updateBookService.update(booking);
+
+        Mockito.verify(bookingRepository).save(any());
+        Mockito.verify(bookingDayRepository).updateBooking(bookingEntity.getId(), bookingDays);
+        Mockito.verify(notificationEventProducer).produceEvent(new Notification(booking, Notification.NotificationType.UPDATE_BOOKED)
+                , String.valueOf( booking.getRoomNumber()));
+
     }
 }

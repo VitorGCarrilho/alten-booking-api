@@ -1,5 +1,6 @@
 package com.alten.bookingservice.service;
 
+import com.alten.bookingservice.component.TemplateEngineWrapper;
 import com.alten.bookingservice.domain.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,20 +8,23 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 public class NotificationService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final String from;
+
+    private final JavaMailSender mailSender;
+
+    private final TemplateEngineWrapper templateEngine;
 
     @Autowired
-    private TemplateEngine templateEngine;
-
-    @Value("${spring.mail.username}")
-    private String from;
+    public NotificationService(JavaMailSender mailSender, TemplateEngineWrapper templateEngine, @Value("${spring.mail.username}") String from) {
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
+        this.from = from;
+    }
 
     public void notify(Notification notification) {
 

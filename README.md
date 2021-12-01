@@ -138,6 +138,12 @@ Amazon EC2</a> or in containers managed by <a href="https://aws.amazon.com/eks/"
 cloud services is that it can be auto-scaling when there is to many requests and it can scale-down to adjust the 
 capacity making it lower cost (You just pay for the machines that you are using).
 
+## Tests
+
+Tests are very important to ensure everything is still workings after some change, so here we added the jacoco plugin 
+to only build the project when at least 70% of the lines are covered. This ensures that others developers will respect
+the minimum test coverage.
+
 ## Feedback
 
 As described before, we need to give a feedback to the user after our end user. Here is some example of the feedback:

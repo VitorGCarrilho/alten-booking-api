@@ -5,6 +5,7 @@ import com.alten.bookingservice.entity.enumeration.BookingStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class BookingResponseDTO implements Serializable {
     private String id;
@@ -47,5 +48,18 @@ public class BookingResponseDTO implements Serializable {
 
     public BookingStatus getBookingStatus() {
         return bookingStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookingResponseDTO that = (BookingResponseDTO) o;
+        return roomNumber == that.roomNumber && Objects.equals(id, that.id) && Objects.equals(fromDate, that.fromDate) && Objects.equals(untilDate, that.untilDate) && Objects.equals(email, that.email) && bookingStatus == that.bookingStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fromDate, untilDate, roomNumber, email, bookingStatus);
     }
 }

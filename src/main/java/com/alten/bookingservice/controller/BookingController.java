@@ -43,13 +43,13 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity cancelBook(@PathVariable String id) {
+    public ResponseEntity cancelBook(@PathVariable String id) {
         cancelBookService.cancelBookEvent(id);
         return ResponseEntity.accepted().build();
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity updateBook(@PathVariable String id, @Valid @RequestBody BookingRequestDTO bookingRequestDTO) {
+    public ResponseEntity updateBook(@PathVariable String id, @Valid @RequestBody BookingRequestDTO bookingRequestDTO) {
         updateBookService.updateBookEvent(id, bookingRequestDTO);
         return ResponseEntity.accepted().build();
     }
