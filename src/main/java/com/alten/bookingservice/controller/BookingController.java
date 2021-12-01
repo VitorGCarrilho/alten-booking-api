@@ -25,8 +25,9 @@ public class BookingController {
     @Autowired
     private UpdateBookService updateBookService;
 
-    @GetMapping("")
-    public String helloWorld() {
+    @GetMapping("/{id}")
+    public String getBooking(@PathVariable String id) {
+        // TODO finish this get
         return "hello world";
     }
 
