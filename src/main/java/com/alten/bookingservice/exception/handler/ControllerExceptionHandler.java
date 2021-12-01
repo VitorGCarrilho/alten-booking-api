@@ -1,6 +1,8 @@
 package com.alten.bookingservice.exception.handler;
 
 import com.alten.bookingservice.exception.AdvanceReservationException;
+import com.alten.bookingservice.exception.ServiceCantGetDataException;
+import com.alten.bookingservice.exception.NotFoundException;
 import com.alten.bookingservice.exception.OutOfRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -42,4 +44,17 @@ public class ControllerExceptionHandler {
         return new ErrorBody(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorBody exceptionHandler(NotFoundException exception) {
+        return new ErrorBody(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(ServiceCantGetDataException.class)
+    public ErrorBody exceptionHandler(ServiceCantGetDataException exception) {
+        return new ErrorBody(HttpStatus.SERVICE_UNAVAILABLE, exception.getMessage());
+    }
 }

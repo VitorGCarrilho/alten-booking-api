@@ -1,6 +1,7 @@
 package com.alten.bookingservice.repository;
 
 import com.alten.bookingservice.dto.response.AvailabilityResponseDTO;
+import com.alten.bookingservice.exception.ServiceCantGetDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,11 @@ public class BookingDayCacheRepository {
 
     public List<AvailabilityResponseDTO> getAvailability(int roomNumber, LocalDate from, LocalDate until) {
         logger.info("method=getAvailability roomNumber={} fromDate={} untilDate={}", roomNumber, from, until);
-        return redisTemplate.opsForValue().get(getId(roomNumber, from, until));
+        try {
+            return redisTemplate.opsForValue().get(getId(roomNumber, from, until));
+        } catch (Exception e) {
+            throw new ServiceCantGetDataException("Cant load the period");
+        }
     }
 
     public void saveAvailability(int roomNumber, LocalDate from, LocalDate until, List<AvailabilityResponseDTO> availabilityResponseDTOList) {

@@ -4,7 +4,6 @@ import com.alten.bookingservice.dto.response.AvailabilityResponseDTO;
 import com.alten.bookingservice.repository.BookingDayCacheRepository;
 import com.alten.bookingservice.repository.BookingDayRepository;
 import com.alten.bookingservice.utils.SampleFactoryUtils;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

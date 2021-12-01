@@ -3,13 +3,13 @@ package com.alten.bookingservice.service;
 import com.alten.bookingservice.dto.response.AvailabilityResponseDTO;
 import com.alten.bookingservice.entity.BookingDayEntity;
 import com.alten.bookingservice.entity.BookingDayEntityId;
+import com.alten.bookingservice.exception.ServiceCantGetDataException;
 import com.alten.bookingservice.repository.BookingDayCacheRepository;
 import com.alten.bookingservice.repository.BookingDayRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -53,6 +53,10 @@ public class AvailabilityService {
 
     public List<AvailabilityResponseDTO> findCachedAvailability(int roomNumber, LocalDate from, LocalDate until) {
         logger.info("method=findCachedAvailability roomNumber={} fromDate={} untilDate={}", roomNumber, from, until);
-        return bookingDayCacheRepository.getAvailability(roomNumber, from, until);
+        var availability = bookingDayCacheRepository.getAvailability(roomNumber, from, until);
+        if (availability == null) {
+            throw new ServiceCantGetDataException("we are having issues trying to get the period");
+        }
+        return availability;
     }
 }

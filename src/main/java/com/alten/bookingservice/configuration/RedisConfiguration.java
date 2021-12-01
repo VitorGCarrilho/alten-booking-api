@@ -1,6 +1,7 @@
 package com.alten.bookingservice.configuration;
 
 import com.alten.bookingservice.dto.response.AvailabilityResponseDTO;
+import com.alten.bookingservice.dto.response.BookingResponseDTO;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,13 @@ public class RedisConfiguration {
     @Bean
     public RedisTemplate<String, List<AvailabilityResponseDTO>> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, List<AvailabilityResponseDTO>> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        return template;
+    }
+
+    @Bean
+    public RedisTemplate<String, BookingResponseDTO> bookingRedisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, BookingResponseDTO> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         return template;
     }

@@ -1,9 +1,11 @@
 package com.alten.bookingservice.controller;
 
 import com.alten.bookingservice.dto.request.BookingRequestDTO;
+import com.alten.bookingservice.dto.response.BookingResponseDTO;
 import com.alten.bookingservice.dto.response.CreateBookingResponseDTO;
 import com.alten.bookingservice.service.BookingService;
 import com.alten.bookingservice.service.CancelBookService;
+import com.alten.bookingservice.service.GetBookingService;
 import com.alten.bookingservice.service.UpdateBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,13 @@ public class BookingController {
     @Autowired
     private UpdateBookService updateBookService;
 
+    @Autowired
+    private GetBookingService getBookingService;
+
     @GetMapping("/{id}")
-    public String getBooking(@PathVariable String id) {
-        // TODO finish this get
-        return "hello world";
+    public ResponseEntity<BookingResponseDTO> getBooking(@PathVariable String id) {
+        var dto = getBookingService.getBooking(id);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
