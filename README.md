@@ -153,4 +153,10 @@ As described before, we need to give a feedback to the user after our end user. 
 
 ## CI pipline
 
+Every merge request will be build before merging by github actions.
+
+- Require a pull request before merging
+
+- Require status checks to pass before merging
+
 [![Java CI with Maven](https://github.com/VitorGCarrilho/alten-booking-service/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/VitorGCarrilho/alten-booking-service/actions/workflows/maven.yml)
