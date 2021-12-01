@@ -3,6 +3,7 @@ package com.alten.bookingservice.service;
 import com.alten.bookingservice.domain.Booking;
 import com.alten.bookingservice.entity.BookingEntity;
 import com.alten.bookingservice.entity.factory.BookingDayEntityFactory;
+import com.alten.bookingservice.producer.NotificationEventProducer;
 import com.alten.bookingservice.producer.RequestedBookingEventProducer;
 import com.alten.bookingservice.repository.BookingDayRepository;
 import com.alten.bookingservice.repository.BookingRepository;
@@ -36,6 +37,9 @@ class BookingServiceTest {
 
     @Mock
     private BookingDayEntityFactory bookingDayEntityFactory;
+
+    @Mock
+    private NotificationEventProducer notificationEventProducer;
 
     @InjectMocks
     private BookingService bookingService;
